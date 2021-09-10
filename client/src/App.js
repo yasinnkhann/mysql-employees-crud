@@ -64,8 +64,8 @@ function App() {
 
   return (
     <div className="App">
-      <div className="information">
 
+      <div className="information">
         <label>Name:</label>
         <input
          type="text" 
@@ -96,14 +96,25 @@ function App() {
          onChange={(e) => setWage(e.target.value)}
          />
 
-        <button onClick={() => addEmployee()}>Add Employee</button>
+        <button 
+        onClick={() => addEmployee()}
+        >
+          Add Employee
+        </button>
       </div>
+
       <br />
+
       <div className="employees">
-        <button onClick={() => getEmployees()}>Show Employees</button>
+        <button
+         onClick={() => getEmployees()}
+        >
+          Show Employees
+        </button>
 
         {employeeList.map((val) => (
             <div className="employee" key={val.id}>
+
               <div>
                 <h3>Name: {val.name}</h3>
                 <h3>Age: {val.age}</h3>
@@ -111,6 +122,7 @@ function App() {
                 <h3>Position: {val.position}</h3>
                 <h3>Wage: {val.wage}</h3>
               </div>
+
               <div>
                 <input type="text"
                 placeholder="Update wage.."
@@ -127,7 +139,8 @@ function App() {
                 >
                   Delete
                 </button>
-              </div>    
+              </div> 
+
             </div>
         ))}
       </div>
