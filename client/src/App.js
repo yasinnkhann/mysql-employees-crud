@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import react, { useState, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -11,6 +11,15 @@ function App() {
   const [wage, setWage] = useState(0);
   const [employeeList, setEmployeeList] = useState([]);
   const [newWage, setNewWage] = useState(0);
+
+  const nameInputRef = useRef(null);
+  const ageInputRef = useRef(null);
+  const countryInputRef = useRef(null);
+  const positionInputRef = useRef(null);
+  const wageInputRef = useRef(null);
+  const newWageInputRef = useRef(null);
+
+
 
   const getEmployees = () => {
     axios.get(`http://localhost:3001/employees`)
@@ -33,6 +42,11 @@ function App() {
     .catch(err => {
       console.error(err); 
     })
+    nameInputRef.current.value = '';
+    ageInputRef.current.value = '';
+    countryInputRef.current.value = '';
+    positionInputRef.current.value = '';
+    wageInputRef.current.value = '';
   };
 
   const updateEmployeeWage = id => {
@@ -48,6 +62,7 @@ function App() {
     .catch(err => {
       console.error(err); 
     })
+    newWageInputRef.current.value = '';
   };
 
   const deleteEmployee = id => {
@@ -70,30 +85,35 @@ function App() {
         <input
          type="text" 
          onChange={(e) => setName(e.target.value)}
+         ref={nameInputRef}
          />
 
         <label>Age:</label>
         <input 
         type="number"
-         onChange={(e) => setAge(e.target.value)}
+        onChange={(e) => setAge(e.target.value)}
+        ref={ageInputRef}
         />
 
         <label>Country:</label>
         <input 
         type="text"
-         onChange={(e) => setCountry(e.target.value)}
-         />
+        onChange={(e) => setCountry(e.target.value)}
+        ref={countryInputRef}
+        />
 
         <label>Position:</label>
         <input
-         type="text"
-         onChange={(e) => setPosition(e.target.value)}
-          />
+        type="text"
+        onChange={(e) => setPosition(e.target.value)}
+        ref={positionInputRef}
+        />
 
         <label>Wage (year):</label>
         <input 
         type="number"
-         onChange={(e) => setWage(e.target.value)}
+        onChange={(e) => setWage(e.target.value)}
+        ref={wageInputRef}
          />
 
         <button 
@@ -127,6 +147,7 @@ function App() {
                 <input type="text"
                 placeholder="Update wage.."
                 onChange={(e) => setNewWage(e.target.value)}
+                ref={newWageInputRef}
                 />
                 <button 
                 onClick={() => updateEmployeeWage(val.id)}
