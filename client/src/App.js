@@ -20,7 +20,6 @@ function App() {
   const newWageInputRef = useRef(null);
 
 
-
   const getEmployees = () => {
     axios.get(`http://localhost:3001/employees`)
     .then(res => {
@@ -52,7 +51,7 @@ function App() {
   const updateEmployeeWage = id => {
     axios.put(`http://localhost:3001/update`, {
       wage: newWage,
-      id
+      id,
     })
     .then(() => {
       setEmployeeList(employeeList.map((val) => {
