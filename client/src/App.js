@@ -1,4 +1,4 @@
-import react, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -22,21 +22,29 @@ function App() {
 
   const getEmployees = () => {
     axios.get(`http://localhost:3001/employees`)
-    .then(res => {
-      setEmployeeList(res.data);
-      console.log(res.data)
+    .then(({ data }) => {
+      console.log(data);
+      setEmployeeList(data);
     })
     .catch(err => {
       console.error(err); 
     })
   };
 
+  useEffect(() => {
+    getEmployees();
+  }, [])
+
   const addEmployee = () => {
     axios.post('http://localhost:3001/create', { 
       name, age, country, position, wage 
     })
     .then(() => {
-      setEmployeeList([...employeeList, {name, age, country, position, wage}])
+      axios.get(`http://localhost:3001/employees`)
+    .then(({ data }) => {
+      console.log(data);
+      setEmployeeList(data);
+    })
     })
     .catch(err => {
       console.error(err); 
@@ -53,10 +61,12 @@ function App() {
       wage: newWage,
       id,
     })
-    .then(() => {
-      setEmployeeList(employeeList.map((val) => {
-        return val.id === id ? {id: val.id, name: val.name, country: val.country, age: val.age, position: val.position, wage: newWage} : val
-      }))
+   .then(() => {
+      axios.get(`http://localhost:3001/employees`)
+    .then(({ data }) => {
+      console.log(data);
+      setEmployeeList(data);
+    })
     })
     .catch(err => {
       console.error(err); 
@@ -69,7 +79,14 @@ function App() {
     .then(() => {
       setEmployeeList(employeeList.filter((val) => {
         return val.id !== id
-      }))
+      }));
+    })
+    .then(() => {
+      axios.get(`http://localhost:3001/employees`)
+    .then(({ data }) => {
+      console.log(data);
+      setEmployeeList(data);
+    })
     })
     .catch(err => {
       console.error(err); 
@@ -77,7 +94,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app">
 
       <div className="information">
         <label>Name:</label>
